@@ -9,3 +9,4 @@ The scale of the visualization updates depending on the company the user chooses
 The user can view the 52 week Highs and Lows that are calculated based on data from exactly 365 days before the current date along with the current price for user's to compare. Lastly, these prices are first normalized from January 31 to allow the user to observe the percent change in price due to the coronavirus along with a popup that will provide the user with the actual closing price on each day since January 31st. 
 
 ![](static/images/Screen%20Shot%202020-04-08%20at%203.05.19%20PM.png)
+![](static/images/Screen%20Shot%202020-04-08%20at%203.06.08 PM.png)
