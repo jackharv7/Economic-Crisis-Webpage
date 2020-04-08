@@ -1,6 +1,6 @@
 # Stock Market Crashes Today and Throughout History
 
-![](https://gfycat.com/ifr/ScarceImmediateGartersnake) 
+<div style='position:relative; padding-bottom:calc(53.65% + 44px)'><iframe src='https://gfycat.com/ifr/ScarceImmediateGartersnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
 
 The purpose of this webpage is to give the user background information of previous recessions that occured throughout history along with the companies that excelled and those that did not. The webpage provides visualizations as to the prices of the S&P 500 and Nasdaq during the recessions, along with the stock prices for those companies that we focused on. 
 
