@@ -1,6 +1,17 @@
 
 a h3 {
   color: red;
+  text-shadow: 2px 2px black;
+}
+a h1 {
+  text-align: center;
+  color: black;
+  text-shadow: 2px 2px black;
+}
+h1 {
+  text-align: center;
+  color: red;
+  text-shadow: 2px 2px black;
 }
 .topnav {
   background-color: #333;
@@ -124,5 +135,7 @@ a h3 {
   text-align: center;
 }
 
-
+text {
+  text-shadow: 2px 2px black;
+}
 

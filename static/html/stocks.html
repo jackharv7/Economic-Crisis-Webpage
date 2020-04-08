@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>USA</title>
+  <title>COVID-19</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -19,7 +19,7 @@
     <a href="/unemployment">Unemployment Data</a>
   </div>
   <div class="jumbotron jumbotron-fluid" style="text-align: center; background-image: url(https://www.cdc.gov/coronavirus/2019-ncov/images/2019-coronavirus.png);">
-    <a href='https://finance.yahoo.com'><h1 style='color:white'>Market Response to Coronavirus</h1></a>
+    <a href='https://finance.yahoo.com'><h1 style='color:white; text-shadow: 2px 2px black;'>Market Response to Coronavirus</h1></a>
   </div>
   <div class="container">
     <div id="stock">
@@ -33,7 +33,7 @@
   <br>
   <div class="container-fluid">
     <div class="jumbotron text-center" id='news' style='background-image: url(https://www.uclaextension.edu/sites/default/files/styles/course_hero/public/2018-08/beyond-the-headlines-polsci-747.jpg?h=722a0a66&itok=AJKdIP40);'>
-      <a class='row btn btn-info' href='/newNews'><h1>NewsFeed</h1></a>
+      <a class='row btn btn-secondary' href='/newNews'><h1 style='background-color: white;'>NewsFeed</h1></a>
     </div>
     <div class='row' style='text-align: center;'>
       <a href={{stocks.zoom_link}}><h3>{{stocks.zoom_news}}</h3></a>
