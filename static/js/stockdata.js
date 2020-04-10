@@ -3,6 +3,12 @@ var formatTime = d3.timeFormat("%b %d");
 var formatNum = d3.format("$,.2f");
 
 function tabulate(data, columns) {
+  data.map(function(d) {
+    d['52 Week Min'] = formatNum(d['52 Week Min']),
+    d['52 Week Max'] = formatNum(d['52 Week Max']),
+    d['Last Price'] = formatNum(d['Last Price'])
+  });
+
   var area = d3.select("body").append("div");
   var contain = area.append("div");
   contain.attr("class", "container-fluid");
@@ -38,12 +44,15 @@ function tabulate(data, columns) {
 
 return table;
 }
-d3.json("static/data/highs_lows.json").then(function(data, err) {
-    if (err) throw err;
-    data.forEach(function(d) {
-      d['52 Week Min'] = formatNum(d['52 Week Min']),
-      d['52 Week Max'] = formatNum(d['52 Week Max']),
-      d['Last Price'] = formatNum(d['Last Price'])
-    });
-    tabulate(data, ['Ticker', 'Last Price','52 Week Min', '52 Week Max'])
+
+$(window).on("load", function() {
+
+  $.ajax({ method:'get',url:'/data/table'}).then(function(data){
+    tabulate(data, ['Ticker', 'Last Price','52 Week Min', '52 Week Max']);
+      
+
+  }).catch(function(error) {
+      console.log("/data/table", error);
+  })
+
 });

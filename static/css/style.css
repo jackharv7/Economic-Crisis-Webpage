@@ -80,8 +80,8 @@ h1 {
   .pink {
     stroke: pink;
   }
-  .black {
-    stroke: black;
+  .blue {
+    stroke: blue;
   }
   .deactivate {
     visibility: hidden;

@@ -2,14 +2,24 @@ from pandas_datareader import data as web
 import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime
+from datetime import timedelta
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import requests
-import pymongo
+from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, redirect
 
+conn = 'mongodb://localhost:27017' 
+
+client = MongoClient(conn)
+db = client['COVID-19']
+unempColl = db.unemployment
+stockColl = db.stocks
+newsColl = db.news
+tableColl = db.stockTable
 
 def unemployment_inflation_gdp_df():
+
     url = "https://www.thebalance.com/unemployment-rate-by-year-3305506"
 
     data = pd.read_html(url)
@@ -23,9 +33,15 @@ def unemployment_inflation_gdp_df():
     data = data[['Year', "Unemployment Rate", "GDP Growth", "Inflation"]]
     data = data.append({'Year': 2020, 'Unemployment Rate': '15', 'GDP Growth': '-24', 'Inflation': '0.9'}, ignore_index=True)
     data['Center'] = '0'
-    return data.to_json("static/data/Unemployment_Inflation.json", orient='records')
+    docs = data.to_dict(orient='records')
+    if (unempColl.estimated_document_count() == 0):
+        return unempColl.insert_many(docs)
+    else:
+        return docs
+
 
 def prices(ticker, startDate, name):
+
     mydata = web.DataReader(ticker,
                         start = startDate,
                         data_source='yahoo')['Adj Close']
@@ -69,8 +85,12 @@ def mergeData():
         data = data.merge(prices(x['Ticker'], '01/31/2020', x['Name']), on='Date')
 
     data['Center'] = '100'
-    return data.to_json("static/data/stocks.json", orient='records')
-mergeData()
+    stocks = data.to_dict(orient='records')
+    if (stockColl.estimated_document_count() == 0):
+        return stockColl.insert_many(stocks)
+    else:
+        return stocks
+
 def scrape_news():
     executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
 
@@ -85,7 +105,12 @@ def scrape_news():
     zoom_link = url + zoom['href']
     zoom_news = zoom.find('h4').get_text()
 
-    ino_link = url + '/search?query=inovio'
+    browser.visit(url + '/search?query=inovio')
+    html = browser.html
+    soup = bs(html, 'html.parser')
+    ino = soup.find('ol').find("a")
+    ino_link = url + ino['href']
+    ino_news = soup.find('h4').get_text()    
 
     browser.visit(url + '/search?query=boeing')
     html = browser.html
@@ -153,12 +178,50 @@ def scrape_news():
         'tesla_link': tesla_link,
         'gap_news': gap_news,
         'gap_link': gap_link,
+        'ino_news': ino_news,
         'ino_link': ino_link
     }
-    return news
+    if (newsColl.estimated_document_count() == 0):
+        return newsColl.insert_one(news)
+    else:
+        return news
 
-# conn = 'mongodb://localhost:27017' 
+#identify 52 week max for each stock
+def max_price(ticker):
+    start = datetime.now() - timedelta(days=365)
+    mydata = web.DataReader(ticker, start=start, data_source='yahoo')['High']
+    return mydata.max()
 
-# client = pymongo.MongoClient(conn)
-# db = client.stockMarket_db
-# db.corona.insert_one(scrape_news())
+#identify 52 week min for each stock
+def min_price(ticker):
+    start = datetime.now() - timedelta(days=365)
+    mydata = web.DataReader(ticker, start=start, data_source='yahoo')['Low']
+    return mydata.min()
+
+#identify the last price of each stock
+def last_price(ticker):
+    start = datetime.now() - timedelta(days=365)
+    mydata = web.DataReader(ticker,start=start, data_source='yahoo')['Adj Close'][-1]
+    return mydata
+
+#run functions on each ticker
+def high_low(ticker):
+    min_max = {
+        'Ticker': ticker,
+        '52 Week Min': min_price(ticker),
+        '52 Week Max': max_price(ticker),
+        'Last Price': last_price(ticker)
+    }
+    return min_max
+
+#create table of all information
+def stock_table():
+    stocks = ['^GSPC', '^IXIC', 'ZM', 'CSCO', 'AMZN', 'BA', 'LMT', 'JPM', 'GS', 'RCL', 'MAR', 'AMC', 'JNJ', 'MRNA', 'RHHBY', 'GILD','INO',
+'CVX', 'XOM', 'FORD', 'GM', 'TSLA', 'ADDYY', 'NKE', 'GPS', 'M']
+    data = [high_low(x) for x in stocks]
+    df = pd.DataFrame(data)
+    data = df.to_dict(orient='records')
+    if (tableColl.estimated_document_count() == 0):
+        return tableColl.insert_many(data)
+    else:
+        return data

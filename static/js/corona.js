@@ -37,8 +37,8 @@ const STOCKS = {
     'moderna': { 'value': 'moderna', 'display': 'Moderna', 'color': 'yellow' },
     'gild': { 'value': 'gild', 'display': 'GILD', 'color': 'yellow' },
     'inovio': { 'value': 'inovio', 'display': 'Inovio', 'color': 'yellow' },
-    'gspc': { 'value': 'gspc', 'display': 'GSPC', 'color': 'black' },
-    'nasdaq': { 'value': 'nasdaq', 'display': 'Nasdaq', 'color': 'black' },
+    'gspc': { 'value': 'gspc', 'display': 'GSPC', 'color': 'blue' },
+    'nasdaq': { 'value': 'nasdaq', 'display': 'Nasdaq', 'color': 'brown' },
     'jpm': { 'value': 'jpm', 'display': 'JPM', 'color': 'coral' },
     'gs': { 'value': 'gs', 'display': 'GS', 'color': 'coral' },
     'ford': { 'value': 'ford', 'display': 'FORD', 'color': 'turquoise' },
@@ -118,6 +118,8 @@ function deactivateLabel(label) {
         .classed("active", false)
         .classed("inactive", true);
 }
+var formatTime = d3.timeFormat("%b %d");
+var formatNum = d3.format(",.2f");
 
 function make_toolTip(circleGroup, chosenvalue) {
 
@@ -138,8 +140,8 @@ function make_toolTip(circleGroup, chosenvalue) {
     return toolTip;
 }
 
-var formatTime = d3.timeFormat("%b %d");
-var formatNum = d3.format(",.2f");
+
+
 
 function valuesByTypeInRecord(record, type) {
     return Object.keys(record).reduce(function(acc, key) {
@@ -243,10 +245,10 @@ function createLabels() {
         macy: addStock('macy', 'lightblue', "Macy's")
             .attr("x", width/1.05)
             .attr("y", 490),
-        nasdaq: addStockMark('nasdaq', 'black', 'Nasdaq')
+        nasdaq: addStockMark('nasdaq', 'brown', 'Nasdaq')
             .attr("x", width/2)
             .attr("y", 480),
-        gspc: addStockMark('gspc', 'black', 'S&P 500')
+        gspc: addStockMark('gspc', 'blue', 'S&P 500')
             .classed("active", true)
             .classed("inactive", false)
             .attr("x", width/2)
@@ -412,31 +414,49 @@ function buildGraph(data) {
 
 
 }
-function updateGraphData() {
 
-    d3.json('static/data/stocks.json').then(function(data, err) {
-        if (err) throw err;
-        data.forEach(function(d) {
-            d.Date = new Date(d.Date);
-            Object.keys(d).forEach(function(key) {
-                d[key] = +d[key];
-            });
+function updateGraphData(data) {
+    // "Thu, 09 Apr 2020 00:00:00 GMT"
+    //'2020-04-09T00:00:00.000+00:00'
+    var parseDate = d3.timeParse("%a, %d %b %Y %H:%M:%S")
+    data = data.map(function(d) {
+        var record = {};
+        Object.keys(d).forEach(function(key) {
+            if (key === 'Date' || key === 'Center') {
+                record.Date = parseDate(d.Date.replace(' GMT', ''));
+                record.Center = +d.Center;
+            }
+            else {
+                record[key] = +d[key];
+            }
         });
-        masterData = data;
-        var activeData = generateActiveData(masterData, STOCKS, activeStocks);
+        return record;
+    });
+    console.log(data);
+    masterData = data;
+    var activeData = generateActiveData(masterData, STOCKS, activeStocks);
 
-        buildGraph(activeData);
-       
-    })
+    buildGraph(activeData);
 }
-updateGraphData();
+
+$(window).on("load", function() {
+
+    $.ajax({ method:'get',url:'/stock/prices'}).then(function(data){
+        console.log(JSON.stringify(data));
+        updateGraphData(data);
+        
+    }).catch(function(error) {
+        console.log("/stock/prices", error);
+    })
+
+});
 (function() {
     var isScraping = false;
     $('#stockButton').on("click", function() {
         if (!isScraping) {
             isScraping = true;
             $.ajax({ method:'get',url:'/scrape'}).then(function(response){
-                updateGraphData();
+                updateGraphData(response);
                 isScraping = false;
             }).catch(function(error) {
                 console.log(error);
