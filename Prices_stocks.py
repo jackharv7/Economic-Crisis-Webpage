@@ -88,6 +88,9 @@ def mergeData():
     stocks = data.to_dict(orient='records')
     if (stockColl.estimated_document_count() == 0):
         return stockColl.insert_many(stocks)
+    elif (stockColl.estimated_document_count() < len(stocks)):
+        stockColl.delete_many({})
+        return stockColl.insert_many(stocks)
     else:
         return stocks
 
