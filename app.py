@@ -1,7 +1,10 @@
-from flask import Flask, render_template, jsonify, redirect
+from flask import Flask, render_template, jsonify, redirect, request
 import pymongo
 from datetime import datetime, timedelta, date
+from splinter import Browser
+from bs4 import BeautifulSoup as bs
 import Prices_stocks
+import predict
 # create instance of Flask app
 
 app = Flask(__name__, template_folder='static/html',static_url_path='/static')
@@ -84,6 +87,34 @@ def stockData():
     ]
     
     return jsonify(stockData)
+
+@app.route("/predictions")
+def predictions():
+    return render_template("predictions.html")
+
+@app.route("/predicts")
+def graphPredictions():
+    ticker = request.args.get("ticker")
+    predictions = predict.stock_prediction(ticker)
+    return predictions
+
+@app.route("/predicts2")
+def graphPredictions2():
+    ticker = request.args.get("ticker")
+    predictions = predict.previous_stock_prediction(ticker)
+
+        # executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
+
+        # browser = Browser("chrome", **executable_path, headless=True)
+
+        # url = "https://finance.yahoo.com/quote/"
+        # browser.visit(url + ticker)
+        # html = browser.html
+        # soup = bs(html, 'html.parser')
+
+        # name = soup.find('div').find('h1').get_text()
+        # print(name)
+    return predictions
 
 @app.route("/newData")
 def newData():

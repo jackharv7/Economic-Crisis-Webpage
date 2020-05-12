@@ -432,7 +432,6 @@ function updateGraphData(data) {
         });
         return record;
     });
-    console.log(data);
     masterData = data;
     var activeData = generateActiveData(masterData, STOCKS, activeStocks);
 
@@ -442,7 +441,7 @@ function updateGraphData(data) {
 $(window).on("load", function() {
 
     $.ajax({ method:'get',url:'/stock/prices'}).then(function(data){
-        console.log(JSON.stringify(data));
+
         updateGraphData(data);
         
     }).catch(function(error) {

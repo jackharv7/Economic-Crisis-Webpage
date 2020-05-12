@@ -31,7 +31,7 @@ def unemployment_inflation_gdp_df():
     data["GDP Growth"] = data["GDP_Growth"].apply(lambda x: x.replace('%', ''))
     data["Inflation"] = data["Inflation"].apply(lambda x: x.replace('%', ''))
     data = data[['Year', "Unemployment Rate", "GDP Growth", "Inflation"]]
-    data = data.append({'Year': 2020, 'Unemployment Rate': '15', 'GDP Growth': '-24', 'Inflation': '0.9'}, ignore_index=True)
+    data = data.append({'Year': 2020, 'Unemployment Rate': '15', 'GDP Growth': '-4.8', 'Inflation': '0.9'}, ignore_index=True)
     data['Center'] = '0'
     docs = data.to_dict(orient='records')
     if (unempColl.estimated_document_count() == 0):
@@ -69,7 +69,7 @@ def mergeData():
         {'Ticker':'RHHBY', 'Name':'Roche'},
         {'Ticker':'CVX', 'Name':'Chevron'},
         {'Ticker':'XOM', 'Name':'Exxon'},
-        {'Ticker':'FORD', 'Name':'FORD'},
+        {'Ticker':'F', 'Name':'FORD'},
         {'Ticker':'GM', 'Name':'GM'},
         {'Ticker':'TSLA', 'Name':'Tesla'},
         {'Ticker':'GILD', 'Name':'GILD'},
@@ -220,7 +220,7 @@ def high_low(ticker):
 #create table of all information
 def stock_table():
     stocks = ['^GSPC', '^IXIC', 'ZM', 'CSCO', 'AMZN', 'BA', 'LMT', 'JPM', 'GS', 'RCL', 'MAR', 'AMC', 'JNJ', 'MRNA', 'RHHBY', 'GILD','INO',
-'CVX', 'XOM', 'FORD', 'GM', 'TSLA', 'ADDYY', 'NKE', 'GPS', 'M']
+'CVX', 'XOM', 'F', 'GM', 'TSLA', 'ADDYY', 'NKE', 'GPS', 'M']
     data = [high_low(x) for x in stocks]
     df = pd.DataFrame(data)
     data = df.to_dict(orient='records')

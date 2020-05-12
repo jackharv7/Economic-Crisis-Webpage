@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Predictions</title>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+
+<body>
+  <div class="topnav">
+    <a href="/">Home</a>
+    <a href="/unemployment">Unemployment Data</a>
+    <a href="/1970">1973's Recession</a>
+    <a href="/dotcom">DOT COM</a>
+    <a href="/gr">Great Recession</a>
+    <a href="/stocks">COVID-19</a>
+    <a class='active' href="/predictions">Predictions</a>
+
+  </div>
+  <div class="jumbotron jumbotron-fluid" style='background-image: url(https://www.umpindex.com/images/UMPI-Stock-Market-Projection-Software.png);'>
+    <h1 style='color:white; text-shadow: 2px 2px black;'>Support Vector Regression Model</h1>
+  </div>
+  <div class="container">
+      <form id="stock-ticker-form">
+        <label for="ticker">Enter Ticker:</label><br>
+        <input id="ticker" type="text" name="ticker">
+        <input type="submit" value="Submit">
+      </form><br>
+    <div id="plot"></div><br>
+    <div id="plot2"></div>
+  </div>
+  <div class='container'>
+      <br>
+      <p>Support Vector Regression Model is a machine learning technique used to identify patterns in historical data and present what the model has learned. SVR is also considered
+          to be a classification algorithm. In this algorithm the data is shifted back to the number of days the user would like to predict in order to lag the data, this
+          ensures that the calculation does not take in data that has not occurred yet. This model will then be trained on 80% of the data allocated from Yahoo Finance, then
+          this model will be tested on the other 20% of data in order to predict future prices. This calculation will only be as accurate as the number of days the
+          user would like to predict. The model will not be able to accuratley predict the next 30-50 days of prices due to other factors that influence stock prices that the machine
+          will not be able to interpret. The accuracy of the model is much better when asked to predict the next 1-5 days becasue it will be able to rely on the most recent prices in order 
+          to make appropriate predictions.
+      </p>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="   crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script defer="defer" type="text/javascript" src="/static/js/predictions.js"></script>
+  <script defer="defer" type="text/javascript" src="/static/js/predicts2.js"></script>
+  
+
+
+</body>
+</html>
