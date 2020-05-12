@@ -4,7 +4,7 @@ A screen recording of the application https://gfycat.com/ifr/ScarceImmediateGart
 
 The purpose of this webpage is to give the user background information of previous recessions that occured throughout history along with the companies that excelled and those that did not. The webpage provides visualizations as to the prices of the S&P 500 and Nasdaq during the recessions, along with the stock prices for those companies that we focused on. 
 
-The webpage also provides the user with historical data on the Unemployment Rate, GDP Growth and Inflatioon Rate per year to provide the user with statistics during the recessions that are covered. The final visualization is meant to keep the user up to date with stock prices and activity in the market today.
+The webpage also provides the user with historical data on the Unemployment Rate, GDP Growth and Inflation Rate per year to provide the user with statistics during the recessions that are covered. The final visualization is meant to keep the user up to date with stock prices and activity in the market today.
 
 The scale of the visualization updates depending on the company the user chooses and allows the user to choose a specific industry along with competitors in the industry. The visualization provides the user with the most up to date prices scraped from Yahoo Finance and updates when new prices are identified. Below this visualization links to New York Times are provided based on the comapnies that are included in the graphic. 
 
