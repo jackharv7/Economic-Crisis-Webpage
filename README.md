@@ -17,7 +17,7 @@ Along with the graphics provided the webpage also includes a Prediction page in 
 
 Previously, our group explored various Machine Learning Algortihms including Linear Regression Models, Neural Network (Long Short-Term Memory Model), and Support Vector Regression models to determine which model we should depend on. Through this evaluation my group members and I determined that the Support Vector Regression Model is the most reliable due to the fact that the model determines the predictions based on the most up to date prices extracted from Yahoo Finance.
 
-These predictions are developed in Python after the user inputs a Stock Ticker that they would like to predict. The Flask app then uses the input provided by the user to run through the SVR function that returns a dataframe with both actual prices and predictions for the next five days from the current date. Then in JavaScript this data is identified using the AJAX function then develops a graph using Plotly.
+These predictions are developed in Python after the user inputs a Stock Ticker that they would like to predict. The Flask app then uses the input provided by the user to run through the SVR function that returns a dataframe with both actual prices and predictions for the next five days from the current date. Then in JavaScript this data is gathered using the AJAX function then develops a graph using Plotly.
 
 ![](static/images/predict1.png)
 ![](static/images/predict2.png)
