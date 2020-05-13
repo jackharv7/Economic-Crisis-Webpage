@@ -12,3 +12,9 @@ The user can view the 52 week Highs and Lows that are calculated based on data f
 
 ![](static/images/Screen%20Shot%202020-04-08%20at%203.05.19%20PM.png)
 ![](static/images/Screen%20Shot%202020-04-08%20at%203.06.08%20PM.png)
+
+Along with the graphics provided the webpage also includes a Prediction page in which a Machine Learning Algorithm is introduced to provide user's with stock predictions 5 days into the future. The algorithm used is the Support Vector Regression Model which is trained on historical prices from the last 6 years to identify patterns and trends in the price of the individual stock selected. Included in this page is a forecast of the last five days and the next five days for user's to develop an understanding of how accurate the model is. 
+
+Previously, our group explored various Machine Learning Algortihms including Linear Regression Models, Neural Network (Long Short-Term Memory Model), and Support Vector Regression models to determine which model we should depend on. Through this evaluation my group members and I determined that the Support Vector Regression Model is the most reliable due to the fact that the model determines the predictions based on the most up to date prices extracted from Yahoo Finance.
+
+These predictions are developed in Python after the user inputs a Stock Ticker that they would like to predict. The Flask app then uses the input provided by the user to run through the SVR function that returns a dataframe with both actual prices and predictions for the next five days from the current date. Then in JavaScript this data is identified using the AJAX function then develops a graph using Plotly.
